@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 
 public class Dice:MonoBehaviour {
@@ -32,8 +33,6 @@ public class Dice:MonoBehaviour {
         }
     }
 
-
-
     private void CountDice() {
         float top = float.MinValue;
         foreach (TextMeshPro surface in _surfaces) {
@@ -45,6 +44,7 @@ public class Dice:MonoBehaviour {
         Debug.Log($"top is {_topSurface.text}");
         _topSurface.color = _activeColor;
         _isOnFloor = true;
+        _isCounted = true;
     }
     private void PickUp() {
         if (_topSurface)

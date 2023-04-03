@@ -677,6 +677,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerEntryPoint: {fileID: 0}
+  _mouseProjection:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &7449092226420329915
 GameObject:
   m_ObjectHideFlags: 0

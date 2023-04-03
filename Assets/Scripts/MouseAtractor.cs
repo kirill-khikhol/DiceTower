@@ -8,6 +8,7 @@ using UnityEngine;
 public class MouseAtractor:MonoBehaviour {
     //TODO: remove me
     [SerializeField] private Transform _towerEntryPoint;
+    [SerializeField] private LayerMask _mouseProjection;
 
     private Vector3 _mousePosition;
     private Rigidbody _rigidbody;
@@ -48,7 +49,7 @@ public class MouseAtractor:MonoBehaviour {
     void FixedUpdate() {
         if (_isGrabbed) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out RaycastHit raycastHit)) {
+            if(Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _mouseProjection)) {
                 _mousePosition = raycastHit.point;
             }
             Vector3 dir = _mousePosition - transform.position;

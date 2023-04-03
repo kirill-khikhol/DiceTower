@@ -15,9 +15,6 @@ public class InputManager : MonoBehaviour
 
     private void Awake() {
         Instance = this;
-        //OnGrab?.ToString();
-        //OnRelise?.ToString();
-        //OnThrowToTower?.ToString();
     }
 
     private void Update() {
@@ -31,6 +28,5 @@ public class InputManager : MonoBehaviour
             OnThrowToTower?.Invoke(this, EventArgs.Empty);
         }
     }
-
 
 }
