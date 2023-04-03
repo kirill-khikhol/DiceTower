@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -12,6 +13,7 @@ public class Dice:MonoBehaviour {
     [SerializeField] private Color _activeColor;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private List<TextMeshPro> _surfaces;
+    [SerializeField] private float _forse = 50f;
 
     public event EventHandler OnScoreCounted;
 
@@ -34,6 +36,10 @@ public class Dice:MonoBehaviour {
     private void FixedUpdate() {
         if (_isOnFloor && !_isCounted && _rigidbody.velocity == Vector3.zero) {
             CountDice();
+        }
+        //check if dice is stuck
+        if(!_isOnFloor && _rigidbody.velocity == Vector3.zero) {
+            Unstuck();
         }
     }
 
@@ -70,6 +76,11 @@ public class Dice:MonoBehaviour {
         if (_layerMask.value == 1 << collision.gameObject.layer) {
             PickUp();
         }
+    }
+
+    private void Unstuck() {
+        Vector3 dir = UnityEngine.Random.insideUnitCircle.normalized;
+        _rigidbody.AddForce(dir * _forse, ForceMode.Impulse);
     }
 
 }

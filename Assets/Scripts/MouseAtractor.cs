@@ -22,12 +22,12 @@ public class MouseAtractor:MonoBehaviour {
     private void Start() {
         InputManager.Instance.OnGrab += InputManager_OnGrab;
         InputManager.Instance.OnRelise += InputManager_OnRelise;
-        InputManager.Instance.OnThrowToTower += InputManager_OnThrowToTower;
+        InputManager.Instance.OnRollDice += InputManager_OnThrowToTower;
     }
     private void OnDisable() {
         InputManager.Instance.OnGrab -= InputManager_OnGrab;
         InputManager.Instance.OnRelise -= InputManager_OnRelise;
-        InputManager.Instance.OnThrowToTower -= InputManager_OnThrowToTower;
+        InputManager.Instance.OnRollDice -= InputManager_OnThrowToTower;
     }
 
     private void InputManager_OnThrowToTower(object sender, System.EventArgs e) {
