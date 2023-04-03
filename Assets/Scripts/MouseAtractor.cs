@@ -1,21 +1,52 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class MouseAtractor : MonoBehaviour
-{
+public class MouseAtractor:MonoBehaviour {
+    //TODO: remove me
+    [SerializeField] private Transform _towerEntryPoint;
+
     private Vector3 _mousePosition;
     private Rigidbody _rigidbody;
-    private float _stopRange = 1f;
+    private float _stopRange = 3f;
+    private bool _isGrabbed;
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
-        Debug.Log(_rigidbody);
+    }
+
+    private void Start() {
+        InputManager.Instance.OnGrab += InputManager_OnGrab;
+        InputManager.Instance.OnRelise += InputManager_OnRelise;
+        InputManager.Instance.OnThrowToTower += InputManager_OnThrowToTower;
+    }
+    private void OnDisable() {
+        InputManager.Instance.OnGrab -= InputManager_OnGrab;
+        InputManager.Instance.OnRelise -= InputManager_OnRelise;
+        InputManager.Instance.OnThrowToTower -= InputManager_OnThrowToTower;
+    }
+
+    private void InputManager_OnThrowToTower(object sender, System.EventArgs e) {
+        Debug.Log("InputManager_OnThrowToTower");
+        float jumpPower = 1f;
+        _rigidbody.DOJump(_towerEntryPoint.position, jumpPower, 1, 1f);
+    }
+
+    private void InputManager_OnRelise(object sender, System.EventArgs e) {
+        Debug.Log("InputManager_OnRelise");
+        _isGrabbed = false;
+    }
+
+    private void InputManager_OnGrab(object sender, System.EventArgs e) {
+        Debug.Log("InputManager_OnRelise");
+        _isGrabbed= true;
     }
 
     void FixedUpdate() {
-        if (Input.GetMouseButton(0)) {
+        if (_isGrabbed) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out RaycastHit raycastHit)) {
                 _mousePosition = raycastHit.point;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,9 +20,20 @@ public class Dice:MonoBehaviour {
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
         Debug.Log(_surfaces.Count);
-        foreach(TextMeshPro surface in _surfaces) {
-            surface.color= _baseColor;
+        foreach (TextMeshPro surface in _surfaces) {
+            surface.color = _baseColor;
         }
+    }
+    private void Start() {
+        InputManager.Instance.OnGrab += InputManager_OnGrab;
+    }
+
+
+    private void OnDisable() {
+        InputManager.Instance.OnGrab -= InputManager_OnGrab;
+    }
+    private void InputManager_OnGrab(object sender, EventArgs e) {
+        PickUp();
     }
 
     private void FixedUpdate() {
@@ -39,11 +51,11 @@ public class Dice:MonoBehaviour {
 
     private void CountDice() {
         float top = float.MinValue;
-        foreach (TextMeshPro surface in _surfaces) { 
-            if(surface.transform.position.y >= top) {
+        foreach (TextMeshPro surface in _surfaces) {
+            if (surface.transform.position.y >= top) {
                 top = surface.transform.position.y;
                 _topSurface = surface;
-                
+
             }
         }
         Debug.Log($"top is {_topSurface.text}");
@@ -51,7 +63,8 @@ public class Dice:MonoBehaviour {
 
     }
     public void PickUp() {
-        _topSurface.color = _baseColor;
+        if (_topSurface)
+            _topSurface.color = _baseColor;
         _isReadyToCount = false;
         _stopCount = 0;
         _topSurface = null;
