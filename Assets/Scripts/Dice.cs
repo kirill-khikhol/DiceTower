@@ -3,19 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Dice:MonoBehaviour {
-    private const int STOP_COUNT = 5;
 
     [SerializeField] private Color _baseColor;
     [SerializeField] private Color _activeColor;
+    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private List<TextMeshPro> _surfaces;
 
     private Rigidbody _rigidbody;
     private TextMeshPro _topSurface;
-    private int _stopCount;
-    private bool _isReadyToCount = false;
+    private bool _isOnFloor;
+    private bool _isCounted;
 
-    [SerializeField] private List<TextMeshPro> _surfaces;
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
@@ -24,26 +25,10 @@ public class Dice:MonoBehaviour {
             surface.color = _baseColor;
         }
     }
-    private void Start() {
-        InputManager.Instance.OnGrab += InputManager_OnGrab;
-    }
-
-
-    private void OnDisable() {
-        InputManager.Instance.OnGrab -= InputManager_OnGrab;
-    }
-    private void InputManager_OnGrab(object sender, EventArgs e) {
-        PickUp();
-    }
 
     private void FixedUpdate() {
-        if (!_isReadyToCount && _rigidbody.velocity == Vector3.zero) {
-            if (_stopCount < STOP_COUNT) {
-                _stopCount++;
-            } else {
-                _isReadyToCount = true;
-                CountDice();
-            }
+        if (_isOnFloor && !_isCounted && _rigidbody.velocity == Vector3.zero) {
+            CountDice();
         }
     }
 
@@ -55,18 +40,30 @@ public class Dice:MonoBehaviour {
             if (surface.transform.position.y >= top) {
                 top = surface.transform.position.y;
                 _topSurface = surface;
-
             }
         }
         Debug.Log($"top is {_topSurface.text}");
         _topSurface.color = _activeColor;
-
+        _isOnFloor = true;
     }
-    public void PickUp() {
+    private void PickUp() {
         if (_topSurface)
             _topSurface.color = _baseColor;
-        _isReadyToCount = false;
-        _stopCount = 0;
         _topSurface = null;
+        _isOnFloor = false;
+        _isCounted = false;
     }
+
+    private void OnCollisionEnter(Collision collision) {
+        if (_layerMask.value == 1 << collision.gameObject.layer) {
+            _isOnFloor = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision) {
+        if (_layerMask.value == 1 << collision.gameObject.layer) {
+            PickUp();
+        }
+    }
+
 }

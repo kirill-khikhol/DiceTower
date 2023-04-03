@@ -652,13 +652,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa5e5f707dc6c74d990008ae3f360a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _baseColor: {r: 0.22075468, g: 1, b: 0.2301371, a: 1}
+  _activeColor: {r: 0.8490566, g: 0.09932356, b: 0.09932356, a: 1}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 8
   _surfaces:
-  - {fileID: 7449092226818214420}
-  - {fileID: 7449092225885829878}
-  - {fileID: 7449092225551160116}
-  - {fileID: 7449092226098855738}
-  - {fileID: 7449092227232403443}
-  - {fileID: 7449092226420329914}
+  - {fileID: 7449092226818214419}
+  - {fileID: 7449092225885829877}
+  - {fileID: 7449092225551160115}
+  - {fileID: 7449092226098855737}
+  - {fileID: 7449092227232403442}
+  - {fileID: 7449092226420329913}
 --- !u!114 &8027959651561556075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,6 +676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f6cf85e0529ef42accbe9587fc33f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _towerEntryPoint: {fileID: 0}
 --- !u!1 &7449092226420329915
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,7 +51,6 @@ public class MouseAtractor:MonoBehaviour {
             if(Physics.Raycast(ray, out RaycastHit raycastHit)) {
                 _mousePosition = raycastHit.point;
             }
-                Debug.Log(_mousePosition);
             Vector3 dir = _mousePosition - transform.position;
             if(dir.magnitude > _stopRange) { 
                 float forse = 20f;
