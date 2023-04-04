@@ -34,7 +34,7 @@ public class ResultManager : MonoBehaviour
         bool hasScoreForEveryDice = true;
 
         foreach(Dice d in _diceList) {
-            if(d.Score==null) {
+            if(d.Score==0) {
                 hasScoreForEveryDice = false; 
                 break;
             }
@@ -67,7 +67,7 @@ public class ResultManager : MonoBehaviour
                 isFirst = false;
             }
             stringBuilder.Append(dice.Score);
-            result += Int32.Parse(dice.Score);
+            result += dice.Score;
         }
         stringBuilder.Append(" = ");
         stringBuilder.Append(result);
