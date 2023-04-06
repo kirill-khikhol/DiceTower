@@ -9,9 +9,14 @@ using UnityEngine;
 public class ResultManager : MonoBehaviour
 {
     [SerializeField] private List<Dice> _diceList;
+    [SerializeField] private Transform _toweErntryPoint;
+    [SerializeField] private Transform _trayEntryPoint;
     public static ResultManager Instance { get; private set; }
 
-    public string _lastResult;
+    //public string LastResult;
+    public Transform ToweErntryPoint => _toweErntryPoint;
+    public Transform TrayEntryPoint => _trayEntryPoint;
+
 
     public event EventHandler<OnResultChangedEventArgs> OnResultChanged;
     public class OnResultChangedEventArgs:EventArgs {

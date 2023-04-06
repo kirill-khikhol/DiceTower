@@ -14,8 +14,8 @@ public class Dice:MonoBehaviour {
 
     private Rigidbody _rigidbody;
     private DiceSurface _topSurface;
-    private bool _isOnFloor;
-    private bool _isCounted;
+    private bool _isOnFloor = false;
+    private bool _isCounted = false;
 
     public int Score;
 
@@ -23,6 +23,7 @@ public class Dice:MonoBehaviour {
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
     }
+
     private void Start() {
         foreach (DiceSurface surface in _surfaces) {
             surface.DeactivateSurface(_baseColor);
@@ -78,6 +79,10 @@ public class Dice:MonoBehaviour {
     private void Unstuck() {
         Vector3 dir = UnityEngine.Random.insideUnitCircle.normalized;
         _rigidbody.AddForce(dir * _forse, ForceMode.Impulse);
+    }
+
+    private void OnMouseDown() {
+        Debug.Log($"selected: {gameObject.name}");
     }
 
 }

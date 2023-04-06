@@ -6,8 +6,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MouseAtractor:MonoBehaviour {
-    //TODO: remove me
-    [SerializeField] private Transform _towerEntryPoint;
+
     [SerializeField] private LayerMask _mouseProjection;
 
     private Vector3 _mousePosition;
@@ -33,7 +32,8 @@ public class MouseAtractor:MonoBehaviour {
     private void InputManager_OnThrowToTower(object sender, System.EventArgs e) {
         Debug.Log("InputManager_OnThrowToTower");
         float jumpPower = 1f;
-        _rigidbody.DOJump(_towerEntryPoint.position, jumpPower, 1, 1f);
+        Vector3 position = ResultManager.Instance.ToweErntryPoint.position;
+        _rigidbody.DOJump(position, jumpPower, 1, 1f);
     }
 
     private void InputManager_OnRelise(object sender, System.EventArgs e) {
