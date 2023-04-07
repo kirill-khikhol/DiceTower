@@ -2614,7 +2614,7 @@ Transform:
   - {fileID: 1080546767}
   m_Father: {fileID: 1774911706}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 43.02507, y: 180, z: -3.4805075e-14}
+  m_LocalEulerAnglesHint: {x: 43.025074, y: 270, z: 0.0000023357295}
 --- !u!1001 &999568107
 PrefabInstance:
   m_ObjectHideFlags: 0
