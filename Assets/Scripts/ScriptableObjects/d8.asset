@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a598fa489fca744ac495fcdf2c92ba, type: 3}
   m_Name: d8
   m_EditorClassIdentifier: 
-  dicePrefab: {fileID: 4827413826198385183, guid: 9850f6b66d57c1a45b7eff91a03bc7bf, type: 3}
+  dicePrefab: {fileID: 4614080598266006354, guid: e8cddc6242e58144f9b6671aead7894e, type: 3}
   lable: d8
