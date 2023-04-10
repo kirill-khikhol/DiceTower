@@ -6,7 +6,7 @@ public class Dice:MonoBehaviour {
 
     [SerializeField] private Color _baseColor;
     [SerializeField] private Color _activeColor;
-    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private LayerMask _floorLayerMask;
     [SerializeField] private List<DiceSurface> _surfaces;
     [SerializeField] private float _forse = 50f;
 
@@ -65,13 +65,13 @@ public class Dice:MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (_layerMask.value == 1 << collision.gameObject.layer) {
+        if (_floorLayerMask.value == 1 << collision.gameObject.layer) {
             _isOnFloor = true;
         }
     }
 
     private void OnCollisionExit(Collision collision) {
-        if (_layerMask.value == 1 << collision.gameObject.layer) {
+        if (_floorLayerMask.value == 1 << collision.gameObject.layer) {
             PickUp();
         }
     }

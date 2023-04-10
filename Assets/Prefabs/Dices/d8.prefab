@@ -139,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseColor: {r: 0.06918894, g: 0.011764705, b: 1, a: 1}
   _activeColor: {r: 0, g: 1, b: 0.062013626, a: 1}
-  _layerMask:
+  _floorLayerMask:
     serializedVersion: 2
     m_Bits: 8
   _surfaces:
@@ -165,7 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f6cf85e0529ef42accbe9587fc33f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerEntryPoint: {fileID: 0}
   _mouseProjection:
     serializedVersion: 2
     m_Bits: 64
