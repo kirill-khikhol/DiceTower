@@ -16,6 +16,7 @@ public class Dice:MonoBehaviour {
     private DiceSurfaceBase _topSurface;
     private bool _isOnFloor = false;
     private bool _isCounted = false;
+    private bool _isFirstUpdate = true;
 
     public int Score;
 
@@ -35,7 +36,9 @@ public class Dice:MonoBehaviour {
             CountDice();
         }
         //check if dice is stuck
-        if (!_isOnFloor && _rigidbody.velocity == Vector3.zero) {
+        if (_isFirstUpdate) {
+            _isFirstUpdate = false;
+        } else if (!_isOnFloor && _rigidbody.velocity == Vector3.zero) {
             Unstuck();
         }
     }
