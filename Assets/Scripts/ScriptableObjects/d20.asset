@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9a598fa489fca744ac495fcdf2c92ba, type: 3}
-  m_Name: d6
+  m_Name: d20
   m_EditorClassIdentifier: 
-  dicePrefab: {fileID: 2685795524506831319, guid: 26831e33b758b524da46e876b7ffe328, type: 3}
-  lable: d6
+  dicePrefab: {fileID: 7063425096524538170, guid: b15d93c63de47374e9153d6bee7d2404, type: 3}
+  lable: d20
