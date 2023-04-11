@@ -7,13 +7,13 @@ public class Dice:MonoBehaviour {
     [SerializeField] private Color _baseColor;
     [SerializeField] private Color _activeColor;
     [SerializeField] private LayerMask _floorLayerMask;
-    [SerializeField] private List<DiceSurface> _surfaces;
+    [SerializeField] private List<DiceSurfaceBase> _surfaces;
     [SerializeField] private float _forse = 50f;
 
     public event EventHandler OnScoreCounted;
 
     private Rigidbody _rigidbody;
-    private DiceSurface _topSurface;
+    private DiceSurfaceBase _topSurface;
     private bool _isOnFloor = false;
     private bool _isCounted = false;
 
@@ -25,7 +25,7 @@ public class Dice:MonoBehaviour {
     }
 
     private void Start() {
-        foreach (DiceSurface surface in _surfaces) {
+        foreach (DiceSurfaceBase surface in _surfaces) {
             surface.DeactivateSurface(_baseColor);
         }
     }
@@ -42,7 +42,7 @@ public class Dice:MonoBehaviour {
 
     private void CountDice() {
         float top = float.MinValue;
-        foreach (DiceSurface surface in _surfaces) {
+        foreach (DiceSurfaceBase surface in _surfaces) {
             if (surface.transform.position.y >= top) {
                 top = surface.transform.position.y;
                 _topSurface = surface;
