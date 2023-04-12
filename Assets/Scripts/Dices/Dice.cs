@@ -8,7 +8,7 @@ public class Dice:MonoBehaviour {
     [SerializeField] private Color _activeColor;
     [SerializeField] private LayerMask _floorLayerMask;
     [SerializeField] private List<DiceSurfaceBase> _surfaces;
-    [SerializeField] private float _forse = 50f;
+    [SerializeField] private float _forse = 5f;
 
     public event EventHandler OnScoreCounted;
 
@@ -82,10 +82,6 @@ public class Dice:MonoBehaviour {
     private void Unstuck() {
         Vector3 dir = UnityEngine.Random.insideUnitCircle.normalized;
         _rigidbody.AddForce(dir * _forse, ForceMode.Impulse);
-    }
-
-    private void OnMouseDown() {
-        Debug.Log($"selected: {gameObject.name}");
     }
 
 }

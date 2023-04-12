@@ -8,12 +8,23 @@ using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private LayerMask _mouseProjection;
+
     private bool _isGrabMode = false;
+    private Dice _selectedDice;
     public static InputManager Instance { get; private set; }
 
     public event EventHandler OnGrab;
     public event EventHandler OnRelise;
     public event EventHandler OnRollDice;
+    public event EventHandler<OnDiceSelectedEventArgs> OnDiceSelected;
+    public class OnDiceSelectedEventArgs:EventArgs {
+        public Dice SelectedDice { get;private set; }
+
+        public OnDiceSelectedEventArgs(Dice selectedDice) {
+            SelectedDice= selectedDice;
+        }
+    }
 
     private void Awake() {
         Instance = this;
@@ -25,6 +36,15 @@ public class InputManager : MonoBehaviour
         }
         if(_isGrabMode && Input.GetMouseButtonUp(1)) {
             OnRelise?.Invoke(this, EventArgs.Empty);
+        }
+        if (Input.GetMouseButtonUp(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _mouseProjection)) {
+                Debug.Log($"hit something {raycastHit.collider.gameObject.name}");
+                _selectedDice = raycastHit.collider.GetComponent<Dice>();
+                OnDiceSelected?.Invoke(this, new OnDiceSelectedEventArgs(_selectedDice));
+                //_mousePosition = raycastHit.point;
+            }
         }
     }
 

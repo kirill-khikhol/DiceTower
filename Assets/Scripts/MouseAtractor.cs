@@ -32,7 +32,7 @@ public class MouseAtractor:MonoBehaviour {
     private void InputManager_OnThrowToTower(object sender, System.EventArgs e) {
         Debug.Log("InputManager_OnThrowToTower");
         float jumpPower = 1f;
-        Vector3 position = ResultManager.Instance.ToweErntryPoint.position;
+        Vector3 position = DiceManager.Instance.ToweErntryPoint.position;
         _rigidbody.DOJump(position, jumpPower, 1, 1f);
     }
 

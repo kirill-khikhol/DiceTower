@@ -6,18 +6,18 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using UnityEngine;
 
-public class ResultManager : MonoBehaviour
+public class DiceManager : MonoBehaviour
 {
     [SerializeField] private List<Dice> _diceList;
     [SerializeField] private Transform _toweErntryPoint;
     [SerializeField] private Transform _trayEntryPoint;
-    public static ResultManager Instance { get; private set; }
+    public static DiceManager Instance { get; private set; }
 
     //public string LastResult;
     public Transform ToweErntryPoint => _toweErntryPoint;
     public Transform TrayEntryPoint => _trayEntryPoint;
 
-
+    public event EventHandler OnDiceListChanged;
     public event EventHandler<OnResultChangedEventArgs> OnResultChanged;
     public class OnResultChangedEventArgs:EventArgs {
         public string LastResult;
@@ -54,11 +54,15 @@ public class ResultManager : MonoBehaviour
     public void AddDice(Dice dice) {
         _diceList.Add(dice);
         dice.OnScoreCounted += Dice_OnScoreCounted;
+        OnDiceListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void RemoveDice(Dice dice) {
         _diceList.Remove(dice);
         dice.OnScoreCounted -= Dice_OnScoreCounted;
+        Debug.Log($"removed {dice.gameObject.name}");
+        Destroy(dice.gameObject);
+        OnDiceListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private  string GetResult() {
@@ -77,5 +81,9 @@ public class ResultManager : MonoBehaviour
         stringBuilder.Append(" = ");
         stringBuilder.Append(result);
         return stringBuilder.ToString();
+    }
+
+    public List<Dice> GetDiceList() {
+        return _diceList;
     }
 }

@@ -14,7 +14,7 @@ public class AddDiceButton:MonoBehaviour {
     //}
 
     public void AddDiceToTray() {
-        ResultManager resultManager = ResultManager.Instance;
+        DiceManager resultManager = DiceManager.Instance;
         Transform transform = resultManager.TrayEntryPoint;
         Dice dice= Instantiate<Dice>(_diceSO.dicePrefab, transform.position,Quaternion.identity);
         resultManager.AddDice(dice);
