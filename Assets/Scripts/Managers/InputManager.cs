@@ -31,19 +31,19 @@ public class InputManager:MonoBehaviour {
     }
 
     private void Update() {
-        if (_isGrabMode && Input.GetMouseButtonDown(1)) {
+        if (_isGrabMode && !Helpers.IsOverUI() && Input.GetMouseButtonDown(1)) {
             OnGrab?.Invoke(this, EventArgs.Empty);
         }
-        if (_isGrabMode && Input.GetMouseButtonUp(1)) {
+        if (_isGrabMode && !Helpers.IsOverUI() && Input.GetMouseButtonUp(1)) {
             OnRelise?.Invoke(this, EventArgs.Empty);
         }
-        if (Input.GetMouseButtonUp(0)) {
+        if (!Helpers.IsOverUI() && Input.GetMouseButtonUp(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _mouseProjection)) {
                 Dice selectedDice = raycastHit.collider.GetComponent<Dice>();
                 if (selectedDice) {
                     OnDiceSelected?.Invoke(this, new OnDiceSelectedEventArgs(selectedDice));
-                } 
+                }
             } else {
                 OnDiceUnselected?.Invoke(this, EventArgs.Empty);
             }
@@ -56,5 +56,9 @@ public class InputManager:MonoBehaviour {
 
     public void ToggleGrabMode(Toggle toggle) {
         _isGrabMode = toggle.isOn;
+    }
+
+    public void UnselectDice() {
+        OnDiceUnselected?.Invoke(this, EventArgs.Empty);
     }
 }
