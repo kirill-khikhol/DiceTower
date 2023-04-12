@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class Dice:MonoBehaviour {
     [SerializeField] private LayerMask _floorLayerMask;
     [SerializeField] private List<DiceSurfaceBase> _surfaces;
     [SerializeField] private float _forse = 5f;
+    [SerializeField] private CinemachineVirtualCamera _diceVirtualCamera;
 
     public event EventHandler OnScoreCounted;
 
@@ -20,6 +22,7 @@ public class Dice:MonoBehaviour {
 
     public int Score;
 
+    public CinemachineVirtualCamera DiceVirtualCamera { get => _diceVirtualCamera;}
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();

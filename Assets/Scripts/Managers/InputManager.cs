@@ -6,23 +6,23 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InputManager : MonoBehaviour
-{
+public class InputManager:MonoBehaviour {
     [SerializeField] private LayerMask _mouseProjection;
 
     private bool _isGrabMode = false;
-    private Dice _selectedDice;
+    //private Dice _selectedDice;
     public static InputManager Instance { get; private set; }
 
     public event EventHandler OnGrab;
     public event EventHandler OnRelise;
     public event EventHandler OnRollDice;
+    public event EventHandler OnDiceUnselected;
     public event EventHandler<OnDiceSelectedEventArgs> OnDiceSelected;
     public class OnDiceSelectedEventArgs:EventArgs {
-        public Dice SelectedDice { get;private set; }
+        public Dice SelectedDice { get; private set; }
 
         public OnDiceSelectedEventArgs(Dice selectedDice) {
-            SelectedDice= selectedDice;
+            SelectedDice = selectedDice;
         }
     }
 
@@ -31,19 +31,21 @@ public class InputManager : MonoBehaviour
     }
 
     private void Update() {
-        if(_isGrabMode && Input.GetMouseButtonDown(1)) {
+        if (_isGrabMode && Input.GetMouseButtonDown(1)) {
             OnGrab?.Invoke(this, EventArgs.Empty);
         }
-        if(_isGrabMode && Input.GetMouseButtonUp(1)) {
+        if (_isGrabMode && Input.GetMouseButtonUp(1)) {
             OnRelise?.Invoke(this, EventArgs.Empty);
         }
         if (Input.GetMouseButtonUp(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _mouseProjection)) {
-                Debug.Log($"hit something {raycastHit.collider.gameObject.name}");
-                _selectedDice = raycastHit.collider.GetComponent<Dice>();
-                OnDiceSelected?.Invoke(this, new OnDiceSelectedEventArgs(_selectedDice));
-                //_mousePosition = raycastHit.point;
+                Dice selectedDice = raycastHit.collider.GetComponent<Dice>();
+                if (selectedDice) {
+                    OnDiceSelected?.Invoke(this, new OnDiceSelectedEventArgs(selectedDice));
+                } 
+            } else {
+                OnDiceUnselected?.Invoke(this, EventArgs.Empty);
             }
         }
     }

@@ -7,33 +7,30 @@ public class UIMain:MonoBehaviour {
     [SerializeField] private Canvas _diceSelectedCanvas;
 
     private void Awake() {
-        //FIXME: Uncomment me
-        //_mainCanvas.gameObject.SetActive(true);
-        //_diceSelectedCanvas.gameObject.SetActive(false);
-
-        {//FIXME: remove me
-            _mainCanvas.gameObject.SetActive(false);
-            _diceSelectedCanvas.gameObject.SetActive(true);
-        }
+        ToggleToMain();
     }
 
-    public void ToggleToDiceSelected() {
+    private void ToggleToDiceSelected() {
         _mainCanvas.gameObject.SetActive(false);
         _diceSelectedCanvas.gameObject.SetActive(true);
     }
 
-    public void ToggleToMain() {
+    private void ToggleToMain() {
         _mainCanvas.gameObject.SetActive(true);
         _diceSelectedCanvas.gameObject.SetActive(false);
     }
 
     private void Start() {
         InputManager.Instance.OnDiceSelected += InputManager_OnDiceSelected;
+        InputManager.Instance.OnDiceUnselected += InputManager_OnDiceUnselected;
+    }
+
+    private void InputManager_OnDiceUnselected(object sender, System.EventArgs e) {
+        ToggleToMain();
     }
 
     private void InputManager_OnDiceSelected(object sender, InputManager.OnDiceSelectedEventArgs e) {
-        _mainCanvas.gameObject.SetActive(false);
-        _diceSelectedCanvas.gameObject.SetActive(true);
+        ToggleToDiceSelected();
         Debug.Log($"InputManager_OnDiceSelected {e.SelectedDice.gameObject.name}");
     }
 }
