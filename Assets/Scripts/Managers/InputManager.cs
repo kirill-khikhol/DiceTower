@@ -31,13 +31,13 @@ public class InputManager:MonoBehaviour {
     }
 
     private void Update() {
-        if (_isGrabMode && !Helpers.IsOverUI() && Input.GetMouseButtonDown(1)) {
+        if (_isGrabMode && Input.GetMouseButtonDown(1) && !Helpers.IsOverUI()) {
             OnGrab?.Invoke(this, EventArgs.Empty);
         }
-        if (_isGrabMode && !Helpers.IsOverUI() && Input.GetMouseButtonUp(1)) {
+        if (_isGrabMode && Input.GetMouseButtonUp(1) && !Helpers.IsOverUI()) {
             OnRelise?.Invoke(this, EventArgs.Empty);
         }
-        if (!Helpers.IsOverUI() && Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0) && !Helpers.IsOverUI()) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _mouseProjection)) {
                 Dice selectedDice = raycastHit.collider.GetComponent<Dice>();
