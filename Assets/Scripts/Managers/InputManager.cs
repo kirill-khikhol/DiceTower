@@ -42,7 +42,7 @@ public class InputManager:MonoBehaviour {
             if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _mouseProjection)) {
                 Dice selectedDice = raycastHit.collider.GetComponent<Dice>();
                 if (selectedDice) {
-                    OnDiceSelected?.Invoke(this, new OnDiceSelectedEventArgs(selectedDice));
+                    SelectDice(selectedDice);
                 }
             } else {
                 OnDiceUnselected?.Invoke(this, EventArgs.Empty);
@@ -60,5 +60,9 @@ public class InputManager:MonoBehaviour {
 
     public void UnselectDice() {
         OnDiceUnselected?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void SelectDice(Dice dice) {
+        OnDiceSelected?.Invoke(this, new OnDiceSelectedEventArgs(dice));
     }
 }

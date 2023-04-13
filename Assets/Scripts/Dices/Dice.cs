@@ -15,12 +15,13 @@ public class Dice:MonoBehaviour {
     public event EventHandler OnScoreCounted;
 
     private Rigidbody _rigidbody;
-    private DiceSurfaceBase _topSurface;
+    private int _topSurfaceIndex = -1;
     private bool _isOnFloor = false;
     private bool _isCounted = false;
     private bool _isFirstUpdate = true;
 
     public int Score;
+    private Dice _diceForUI;
 
     public CinemachineVirtualCamera DiceVirtualCamera { get => _diceVirtualCamera;}
 
@@ -48,23 +49,24 @@ public class Dice:MonoBehaviour {
 
     private void CountDice() {
         float top = float.MinValue;
-        foreach (DiceSurfaceBase surface in _surfaces) {
-            if (surface.transform.position.y >= top) {
-                top = surface.transform.position.y;
-                _topSurface = surface;
+        for(int i=0; i< _surfaces.Count;i++) {
+            float y = _surfaces[i].transform.position.y;
+            if (y >= top) {
+                top = y;
+                _topSurfaceIndex = i;
             }
         }
-        Score = _topSurface.Score;
-        _topSurface.ActivateSurface(_activeColor);
+        Score = _surfaces[_topSurfaceIndex].Score;
+        ActivateDiceSurface(_topSurfaceIndex);
         _isOnFloor = true;
         _isCounted = true;
         OnScoreCounted?.Invoke(this, EventArgs.Empty);
     }
     private void PickUp() {
-        if (_topSurface) {
-            _topSurface.DeactivateSurface(_baseColor);
+        if (_topSurfaceIndex>-1) {
+            DeactivateDiceSurface(_topSurfaceIndex);
         }
-        _topSurface = null;
+        _topSurfaceIndex = -1;
         _isOnFloor = false;
         _isCounted = false;
         Score = 0;
@@ -87,4 +89,25 @@ public class Dice:MonoBehaviour {
         _rigidbody.AddForce(dir * _forse, ForceMode.Impulse);
     }
 
+    public void ActivateDiceSurface(int surfaceIndex) {
+        _surfaces[surfaceIndex].ActivateSurface(_activeColor);
+        if (_diceForUI) {
+            _diceForUI.ActivateDiceSurface(surfaceIndex);
+        }
+    }
+    public void DeactivateDiceSurface(int surfaceIndex) {
+        _surfaces[surfaceIndex].DeactivateSurface(_baseColor);
+        if (_diceForUI) {
+            _diceForUI.DeactivateDiceSurface(surfaceIndex);
+        }
+    }
+    public void SetDiceForUI(Dice dice) {
+        _diceForUI= dice;
+    }
+
+    public void RemoveCamera() {
+        if (!_diceForUI) {
+            Destroy(_diceVirtualCamera.gameObject);
+        }
+    }
 }

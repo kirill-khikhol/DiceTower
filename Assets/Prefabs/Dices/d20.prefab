@@ -1029,7 +1029,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826420671670943881}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1044,7 +1044,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826420671670943881}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: df78715369682f24cb170545e4e27321, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -1089,7 +1089,7 @@ MonoBehaviour:
   - {fileID: 8960610885671838831}
   - {fileID: 7003745227649648655}
   - {fileID: 8678935382342013506}
-  _forse: 5
+  _forse: 100
   _diceVirtualCamera: {fileID: 8255620085878171515}
   Score: 0
 --- !u!114 &1302507038107032116
